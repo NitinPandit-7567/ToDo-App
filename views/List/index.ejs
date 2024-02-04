@@ -1,0 +1,50 @@
+<% layout('./layout/boilerplate')%>
+    <div class="container mt-3 p-0">
+        <h1 class="text-center">All To-Do Lists</h1>
+        <div class="row mt-5 p-0">
+            <%for(i of lists){%>
+                <div class="col-4 bg-<%=color[i.status]%> rounded-4 my-3 p-3"
+                    style="margin-right: 1px; margin-left: 0px;">
+
+                    <div class="card my-3">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <%=i.title%> <span
+                                        class="bg-<%= color[i.status]%> <% console.log(color[i.status]+' '+i.status)%>rounded-pill px-3 py-1 fs-6 text-light">
+                                        <%=i.status%>
+                                    </span>
+                            </h4>
+
+                            <p class="card-text text-end">- created by <span
+                                    class="rounded-2 bg-dark-subtle text-dark px-2">
+                                    <%=i.username.username%>
+                                </span></p>
+                        </div>
+                        <ol class="list-group list-group-flush">
+                            <%for(j of i.tasks){%>
+                                <li class="list-group-item">
+                                    <div class="d-flex">
+                                        <span
+                                            class="me-auto <%=j.status==='Completed' ? `${'text-decoration-line-through'}` : ''%>">
+                                            <%=j.task%>
+                                        </span>
+                                        <div class=" d-inline rounded-circle bg-<%=color[j.status]%> ms-auto">
+                                            <span class="opacity-0">ST..</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <%}%>
+                        </ol>
+                        <div class="card-text p-3">
+                            <a href="/lists/<%=i._id%>" class='btn btn-success'>View List</a>
+                            <% if(user===i.username._id.toString()){%>
+                                <form action="/lists/<%=i._id%>?_method=DELETE" method="POST" class="d-inline">
+                                    <button class=' btn btn-danger'>Delete List</button>
+                                </form>
+                                <%}%>
+                        </div>
+                    </div>
+                </div>
+                <%}%>
+        </div>
+    </div>

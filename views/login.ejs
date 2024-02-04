@@ -1,0 +1,27 @@
+<% layout('./layout/boilerplate')%>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 offset-3 mt-3">
+                <div class="card">
+                    <h3 class="card-title my-3 text-center">LogIn to ToDo List</h3>
+                    <div class="card-body">
+                        <form action="/login" class="needs-validation" method="POST" novalidate>
+                            <div>
+                                <label for="username" class="form-label">Username:</label>
+                                <input type="text" name="username" id="username" placeholder="Username" required
+                                    class="form-control">
+                                <div class="invalid-feedback">Username cannot be blank</div>
+                            </div>
+                            <div>
+                                <label for="password" class="form-label">Password:</label>
+                                <input type="password" id="password" name="password" placeholder="Password"
+                                    class="form-control" required>
+                                <div class="invalid-feedback">Password cannot be blank</div>
+                            </div>
+                            <button class="btn btn-success mt-3">LogIn</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

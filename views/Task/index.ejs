@@ -1,0 +1,42 @@
+<% layout('./layout/boilerplate')%>
+    <div class="container mb-3">
+        <h1 class="text-center">All Tasks</h1>
+        <div class="row">
+            <div class="col-6 mb-3"></div>
+            <%for(let i of tasks) {%>
+                <div class="card bg-<%=color[i.status]%>-subtle mb-1">
+                    <div class="card-body">
+                        <span class="rounded-pill py-1 px-2 bg-<%=color[i.status]%> text-light me-2">
+                            <%=i.status%>
+                                <%console.log('Item: ',i)%>
+                        </span>
+                        <h5 class="card-title d-inline">
+                            <%=i.task%>
+                        </h5>
+                        <p class="card-text text-end"><span class="rounded-pill py-1 px-2 bg-info text-light">
+                                <%=i.list.title%>
+                            </span></p>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            <%=i.description%>
+                        </p>
+                    </div>
+                    <hr>
+                    <div class="card-body mb-3 d-flex">
+                        <a href="/tasks/<%=i._id%>"
+                            class="btn btn-success me-1">View Task</a>
+                        <a href="/lists/<%=i.list._id%>" class="btn btn-warning">View List</a>
+                        <%if(user===i.list.username.toString()){%>
+                        <form action="/tasks/<%=i._id%>?_method=DELETE" method="POST" class="d-inline ms-auto">
+                        <button class="btn btn-danger">Delete</button>
+                        </form>
+                        <%}%>
+                    </div>
+                </div>
+
+
+                <%}%>
+        </div>
+    </div>
+    </div>

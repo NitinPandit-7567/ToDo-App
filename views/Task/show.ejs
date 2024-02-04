@@ -1,0 +1,62 @@
+<% layout('layout/boilerplate')%>
+    <div class="container">
+        <div class="row my-3">
+            <div
+                class="col-6 offset-3 <%=t.status==='Completed'? `${'bg-success text-light'}` : t.status==='In Progress' ? `${'bg-primary'}` : `${'bg-warning'}`%> rounded-4 py-3">
+                <div class="card bg-<%=color[t.status]%>-subtle">
+                    <div class="card-title pt-3 px-2">
+                        <div class="d-flex">
+                            <a class=" d-inline rounded-3 bg-<%=color[t.list.status]%> text-light py-1 px-2 text-decoration-none me-2"
+                                href="/lists/<%=t.list._id%>">
+                                <%=t.list.title%>
+                            </a>
+                            <span
+                                class="d-inline bg-<%=color[t.status]%> rounded-pill px-3 py-1 fs-6 text-light me-auto">
+                                <form action="/tasks/<%=t._id%>?_method=PATCH" method="POST" class="d-inline">
+                                    <select name="status" id="status"
+                                        class="d-inline bg-<%=color[t.status]%> text-light border border-0"
+                                        <%=user===t.list.username.toString()?'':`${'disabled'}`%>
+                                        onchange="this.form.submit()">
+                                        <option type="submit" value="New" <%=t.status==='New' ? 'selected' : '' %>
+                                            class="bg-warning text-light">New
+                                        </option>
+                                        <option type="submit" value="In Progress" <%=t.status==='In Progress'
+                                            ? 'selected' : '' %> class="bg-primary text-light">In
+                                            Progress
+                                        </option>
+                                        <option type="submit" value="Completed" <%=t.status==='Completed' ? 'selected'
+                                            : '' %> class="bg-success text-light">Completed
+                                        </option>
+                                    </select>
+                                </form>
+                            </span>
+                            <!-- t.list.username.username -->
+                            <span
+                                class="d-inline align-self-end rounded-pill text-end text-body-dark bg-dark-subtle px-2 ms-2">u/
+                                <%=uname%> -
+                                    <%=t.list.date%>
+                            </span>
+                        </div>
+                        <h1 class="text-decoration-underline mt-4 mb-0">Task : <%=t.task%>
+                        </h1>
+                    </div>
+                    <hr>
+                    <div class="card-body">
+                        <h5 class="my-3 card-text">
+                            <%=t.description%>
+                        </h5>
+                    </div>
+
+                    <%if(user===t.list.username.toString()){%>
+                        <hr>
+                        <div class="card-body d-flex">
+                            <a href="/tasks/<%=t._id%>/edit" class="btn btn-success">Edit Task</a>
+                            <form action="/tasks/<%=t._id%>?_method=DELETE" method="POST" class="d:inline ms-auto">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                        <%}%>
+                </div>
+            </div>
+        </div>
+    </div>

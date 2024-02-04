@@ -1,0 +1,72 @@
+<% layout('layout/boilerplate')%>
+    <div class="container my-3">
+        <div class="row">
+            <div class="col-6 my-3 bg-<%=color[l.status]%> rounded-4 p-3 offset-3">
+                <div class="card my-3 p-1 bg-<%=color[l.status]%>-subtle">
+                    <div class="card-body">
+                        <p class="card-text text-end"><span class="rounded-pill py-1 px-2 bg-secondary text-light">
+                                <%=l.username.username%> : <%=l.date%>
+                            </span></p>
+                        <h4 class="card-title d-inline">
+                            <%=l.title%>
+                                <span class="bg-<%=color[l.status]%> rounded-pill px-3 py-1 fs-6 text-light">
+                                    <form action="/lists/<%=l._id%>/status?_method=PATCH" method="POST"
+                                        class="d-inline">
+                                        <select name="status" id="status"
+                                            class=" mb-3 bg-<%=color[l.status]%> text-light border border-0" onchange="
+                                            this.form.submit()" <%=user===(l.username._id).toString() ? ''
+                                            :`${'disabled'}`%>>
+                                            <option type="submit" value="New" <%=l.status==='New' ? 'selected' : '' %>
+                                                class="bg-warning text-light">New</option>
+                                            <option type="submit" value="In Progress" <%=l.status==='In Progress'
+                                                ? 'selected' : '' %>
+                                                class="bg-primary text-light">In
+                                                Progress
+                                            </option>
+                                            <option type="submit" value="Completed" <%=l.status==='Completed'
+                                                ? 'selected' : '' %>
+                                                class="bg-success text-light">Completed
+                                            </option>
+                                        </select>
+                                    </form>
+                                </span>
+                        </h4>
+                    </div>
+                    <ol class="list-group list-group-flush">
+                        <%for(let j of l.tasks){%>
+                            <li class="list-group-item bg-<%= color[j.status]%>"><a href="/tasks/<%=j._id%>"
+                                    class="text-decoration-none <%= j.status=='Completed' ? `${'text-decoration-line-through text-light'}` : `${'text-light'}`%>">
+                                    <%=j.task%>
+                                </a></li>
+                            <%}%>
+                                <%if(new_task){%>
+                                    <li class="list-group-item bg-warning">
+                                        <form action="/lists/<%=l._id%>/newTask" method="POST">
+                                            <input type="text" class="form-control d-inline" name="task">
+                                            <!-- <button class="d:inline"></button> -->
+                                        </form>
+                                    </li>
+                                    <%} else{%>
+                                        <a href="/lists/<%=l.id%>?new_task=true"
+                                            class="btn btn-dark my-2 ms-2 btn-sm <%=l.status==='Completed' ? 'disabled':''%>"
+                                            <%=l.status==='Completed' ? 'style=pointer-events:none;' : '' %>>Add
+                                            Task</a>
+                                        <%}%>
+                    </ol>
+                    <!-- <div class="card-body mb-3">
+                        <form action="/lists/<%=l._id%>/status?_method=PATCH" method="POST">
+                            <label for="status" class="form-label">Status:</label>
+                            <select name="status" id="status" class="form-control mb-3">
+                                <option value="New" <%=l.status==='New' ? 'selected' : '' %>>New</option>
+                                <option value="In Progress" <%=l.status==='In Progress' ? 'selected' : '' %>>In Progress
+                                </option>
+                                <option value="Completed" <%=l.status==='Completed' ? 'selected' : '' %> >Completed
+                                </option>
+                            </select>
+                            <button class="btn btn-warning">Update</button>
+                        </form>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
