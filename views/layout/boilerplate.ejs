@@ -39,8 +39,7 @@
     </div>
   </nav>
   <% if(success.length || info.length || error.length){ let {message, status}=success.length ? {message: success,
-    status: 'success' }: info.length? {message: info, status: 'warning' } : {message: error, status: 'danger' };
-    console.log(status)%>
+    status: ' success' }: info.length? {message: info, status: 'warning' } : {message: error, status: 'danger' };%>
     <div class="alert alert-<%=status%> alert-dismissible fade show" role="alert">
       <strong>
         <%=message%>

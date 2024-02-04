@@ -43,7 +43,7 @@ app.use((req, res, next) => {
     res.locals.user = req.session.user_id;
     res.locals.success = req.flash('success');
     res.locals.info = req.flash('info');
-    res.locals.error = req.flash('error;')
+    res.locals.error = req.flash('error')
     next();
 })
 
@@ -95,6 +95,7 @@ app.post('/login', wrapAsync(async (req, res) => {
         res.redirect(redirectUrl);
     }
     else {
+        req.flash('error', 'Incorrect username/password')
         res.redirect('/login')
     }
 }))

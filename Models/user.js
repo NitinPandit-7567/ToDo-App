@@ -16,14 +16,19 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.statics.findAndValidate = async function (username, password) {
+    console.log('pass: ', password, ' usernmae: ', username)
     const u = await this.findOne({ username });
-    console.log(u)
-    const result = await bcrypt.compare(password, u.password);
-    if (result) {
-        return u;
+    if (u) {
+        const result = await bcrypt.compare(password, u.password);
+        if (result) {
+            return u;
+        }
+        else {
+            return false;
+        }
     }
     else {
-        return false;
+        return false
     }
 }
 
